@@ -1,4 +1,7 @@
+const $arenas = document.querySelector('.arenas');
+
 const player1 = {
+    player: 1,
     name: 'Kitana',
     hp: 90,
     img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
@@ -8,6 +11,7 @@ const player1 = {
 }
 
 const player2 = {
+    player: 2,
     name: 'Subzero',
     hp: 30,
     img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
@@ -16,20 +20,23 @@ const player2 = {
     }
 }
 
-const createPlayer = (class_name, player_obj) => {
-    const $player = document.createElement('div');
-    const $progressbar = document.createElement('div');
-    const $character = document.createElement('div');
-    const $life = document.createElement('div');
-    const $name = document.createElement('div');
-    const $img = document.createElement('img');
-    const $arenas = document.querySelector('.arenas');
+const create_element = (tag, class_name) => {
+    const $tag = document.createElement(tag);
 
-    $player.classList.add(class_name);
-    $progressbar.classList.add('progressbar');
-    $character.classList.add('character');
-    $life.classList.add('life');
-    $name.classList.add('name');
+    if(class_name){
+        $tag.classList.add(class_name);
+    }
+
+    return $tag;
+};
+
+const create_player = (player_obj) => {
+    const $player = create_element('div', 'player' + player_obj.player)
+    const $progressbar = create_element('div', 'progressbar');
+    const $character = create_element('div', 'character');
+    const $life = create_element('div', 'life');
+    const $name = create_element('div', 'name');
+    const $img = create_element('img');
     
     $life.style.width = player_obj.hp + '%';
     $name.innerText = player_obj.name;
@@ -37,12 +44,15 @@ const createPlayer = (class_name, player_obj) => {
 
     $player.appendChild($progressbar);
     $player.appendChild($character);
+
     $progressbar.appendChild($life);
     $progressbar.appendChild($name);
+    
     $character.appendChild($img);
 
-    $arenas.appendChild($player);
+    return $player;
 };
 
-createPlayer('player1', player1);
-createPlayer('player2', player2);
+$arenas.appendChild(create_player(player1));
+$arenas.appendChild(create_player(player2));
+

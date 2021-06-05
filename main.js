@@ -57,9 +57,12 @@ const create_player = (player_obj) => {
 const change_hp = (player) => {
     const $player_life = document.querySelector('.player' + player.player + ' .life');
    
-    player.hp -= Math.floor(Math.random() * 20) + 1;
-    $player_life.style.width = player.hp + '%';
-  
+    if(player.hp > 0){
+        player.hp -= Math.floor(Math.random() * 20) + 1;
+        $player_life.style.width = player.hp + '%';
+    } else {
+        player.hp = 0;
+    }
 
     if(player.hp < 0){
         $arenas.appendChild(player_lose(player.name));

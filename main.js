@@ -62,19 +62,29 @@ const change_hp = (player) => {
         $player_life.style.width = player.hp + '%';
     } else {
         player.hp = 0;
-    }
 
-    if(player.hp < 0){
-        $arenas.appendChild(player_lose(player.name));
+        $arenas.appendChild(player_win(player.name));
         $but_random.disabled = true;
     }
 };
 
-const player_lose = (name) => {
-    const $lose_text = create_element('div', 'loseTitle');
-    $lose_text.innerText = name + ' lose';
+// const player_lose = (name) => {
+//     const $lose_text = create_element('div', 'loseTitle');
+//     $lose_text.innerText = name + ' lose';
 
-    return $lose_text;
+//     return $lose_text;
+// };
+
+const player_win_draw = () => {
+    const $win_text = create_element('div', 'loseTitle');
+    
+    if(player1.hp > player2.hp){
+        $win_text.innerText = player1.name + ' win';
+    } else {
+        $win_text.innerText = player2.name + ' win';
+    }
+
+    return $win_text;
 };
 
 $but_random.addEventListener('click', function(){

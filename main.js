@@ -63,7 +63,7 @@ const change_hp = (player) => {
     } else {
         player.hp = 0;
 
-        $arenas.appendChild(player_win(player.name));
+        $arenas.appendChild(player_win_draw(player.name));
         $but_random.disabled = true;
     }
 };
@@ -78,10 +78,12 @@ const change_hp = (player) => {
 const player_win_draw = () => {
     const $win_text = create_element('div', 'loseTitle');
     
-    if(player1.hp > player2.hp){
+    if(player1.hp > player2.hp && player1.hp > 0){
         $win_text.innerText = player1.name + ' win';
-    } else {
+    } else if(player1.hp < player2.hp && player2.hp > 0) {
         $win_text.innerText = player2.name + ' win';
+    } else {
+        $win_text.innerText = 'Draw';
     }
 
     return $win_text;

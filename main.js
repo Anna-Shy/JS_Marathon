@@ -1,9 +1,10 @@
 const $arenas = document.querySelector('.arenas');
+const $but_random = document.querySelector('.button');
 
 const player1 = {
     player: 1,
     name: 'Kitana',
-    hp: 90,
+    hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
     attack: function(name){
         console.log(this.name + ' Fight...');
@@ -13,7 +14,7 @@ const player1 = {
 const player2 = {
     player: 2,
     name: 'Subzero',
-    hp: 30,
+    hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
     attack: function(name){
         console.log(this.name + ' Fight...');
@@ -52,6 +53,46 @@ const create_player = (player_obj) => {
 
     return $player;
 };
+
+const change_hp = (player) => {
+    const $player_life = document.querySelector('.player' + player.player + ' .life');
+   
+    if(player.hp > 0){
+        player.hp -= Math.floor(Math.random() * 20) + 1;
+        $player_life.style.width = player.hp + '%';
+    } else {
+        player.hp = 0;
+
+        $arenas.appendChild(player_win_draw(player.name));
+        $but_random.disabled = true;
+    }
+};
+
+// const player_lose = (name) => {
+//     const $lose_text = create_element('div', 'loseTitle');
+//     $lose_text.innerText = name + ' lose';
+
+//     return $lose_text;
+// };
+
+const player_win_draw = () => {
+    const $win_text = create_element('div', 'loseTitle');
+    
+    if(player1.hp > player2.hp && player1.hp > 0){
+        $win_text.innerText = player1.name + ' win';
+    } else if(player1.hp < player2.hp && player2.hp > 0) {
+        $win_text.innerText = player2.name + ' win';
+    } else {
+        $win_text.innerText = 'Draw';
+    }
+
+    return $win_text;
+};
+
+$but_random.addEventListener('click', function(){
+    change_hp(player1);
+    change_hp(player2);
+});
 
 $arenas.appendChild(create_player(player1));
 $arenas.appendChild(create_player(player2));
